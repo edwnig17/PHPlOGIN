@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  height: 100%;
+}
+body{
+  margin: 0;
+  padding: 0;
+  font-family: Verdana;
+background-color: black !important;
+
+}
+
+.caja_login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  transition: 3s;
+  background: rgb(0, 187, 255);
+  box-shadow: 15px 15px 30px 20px white;
+  border-radius: 10px;
+}
+
+.caja_register {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, 10%);
+    transition: 3s;
+    background: rgb(0, 187, 255);
+    box-shadow: 15px 15px 30px 20px white;
+    border-radius: 10px;
+    backdrop-filter: blur(6px)
+  }
+
+.caja_login h2 {
+  margin: 0 0 30px;
+  padding: 0;
+  color: white;
+  text-align: center;
+}
+
+.caja_login  .caja_login-input, .caja_register .caja_login-input{
+  position: relative;
+}
+
+.caja_login .caja_login-input input, .caja_register .caja_login-input input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: white;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;  /*Bordes de los inputs none*/
+  background: transparent;
+}
+.caja_login .caja_login-input label, 
+.caja_register .caja_login-input label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #000000;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.caja_login .caja_login-input input:focus ~ label,
+.caja_login .caja_login-input input:valid ~ label,
+.caja_register .caja_login-input input:focus ~ label,
+.caja_register .caja_login-input input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: rgb(0, 119, 255);
+  font-size: 12px;
+}
+
+.caja_login form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: white !important;
+  font-size: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-top: 40px;
+  letter-spacing: 6px;
+  cursor: pointer;
+}
+
+.caja_login a:hover {
+  background: #0400ff;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #41fc79cc, 0 0 25px #41fc79cc, 0 0 50px #41fc79cc,
+    0 0 100px #41fc79cc;
+}
+
+.caja_login a span {
+  position: absolute;
+  display: block;
+}
+
+.caja_login a span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #07b601);
+  animation: animacaoBotao1 1s linear infinite;
+}
+
+@keyframes animacaoBotao1 {
+  0% {
+    left: -100%;
+  }
+  70%,
+  100% {
+    left: 100%;
+  }
+}
+
+.caja_login a span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #a89004);
+  animation: animacaoBotao2 1s linear infinite;
+  animation-delay: 0.25s;
+}
+
+@keyframes animacaoBotao2 {
+  0% {
+    top: -100%;
+  }
+  70%,
+  100% {
+    top: 100%;
+  }
+}
+
+.caja_login a span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, #ff0000);
+  animation: animacaoBotao3 1s linear infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes animacaoBotao3 {
+  0% {
+    right: -100%;
+  }
+  70%,
+  100% {
+    right: 100%;
+  }
+}
+
+.caja_login a span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #0400ff);
+  animation: animacaoBotao4 1s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes animacaoBotao4 {
+  0% {
+    bottom: -100%;
+  }
+  70%,
+  100% {
+    bottom: 100%;
+  }
+}
+
