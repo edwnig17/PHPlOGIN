@@ -1,24 +1,28 @@
 <?php 
-    require_once("../../../configs/configFacturas.php");
+ini_set("display_errors", 1);
+
+ini_set("display_startup_errors", 1);
+
+error_reporting(E_ALL);
+    require_once("../../../configs/configDetalle.php");
     $data = new Config();
     $id = $_GET['id'];
     $data-> setId($id);
     $record = $data->selectOne();
-  
+    print_r($record);
     $val = $record[0];
-   
+    print_r($val);
 
     $all = $data -> obtainAll();
-    $idempleado = $data->obtenerEmpleadoId();
-    $idcliente = $data->obtenerClienteId();
+    $idProducto = $data-> obtenerProducto_id();
 
     if(isset($_POST['editar'])){
-        $data->setEmpleado_id($_POST['empleado_id']);
-        $data->setCliente_id($_POST['cliente_id']);
-        $data->setFecha($_POST['fecha']);
+        $data -> setProducto_id($_POST['producto_id']);
+        $data -> setCantidad($_POST['cantidad']);
+        $data -> setPrecio_venta($_POST['precio_venta']);
 
         $data->update();
-        echo "<script>alert('Datos actualizados satisfactoriamente');document.location='../../file/facturas.php'</script>";
+        echo "<script>alert('Datos actualizados satisfactoriamente');document.location='../../file/facturaD.php'</script>";
     }
 ?>
 <!DOCTYPE html>
@@ -35,6 +39,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
 
     <link rel="stylesheet" type="text/css" href="../../../../../styles.css">
 
@@ -82,47 +87,42 @@
       </div>
     </div>
     <div class="parte-media">
-        <h2 class="m-2">Factura a Editar</h2>
+        <h2 class="m-2">Detalles de la Factura a Editar</h2>
         <div class="menuTabla contenedor2">
             <form class="col d-flex flex-wrap" action=""  method="post">
+                <select class="form-select" aria-label="Default select example" id="producto_id" name="producto_id" required>
+                    <option selected>Seleccione el id del Empleados</option>
+                    <?php
+                      foreach($idProducto as $key => $valor){
+                      ?> 
+                    <option value="<?= $valor["producto_id"]?>"><?= $valor["nombre_producto"]?></option>
+                    <?php
+                      }
+                    ?>
+                </select>
+
                 <div class="mb-1 col-12">
-                <select class="form-select" aria-label="Default select example" id="empleado_id" name="empleado_id" required>
-                  <option selected>Seleccione el id del Empleados</option>
-                  <?php
-                    foreach($idempleado as $key => $valor){
-                    ?> 
-                  <option value="<?= $valor["empleado_id"]?>"><?= $valor["nombre_empleados"]?></option>
-                  <?php
-                    }
-                  ?>
-                </select>
-              </div>
+                    <label for="cantidad" class="form-label">Cantidad: </label>
+                    <input 
+                      type="number"
+                      id="cantidad"
+                      name="cantidad"
+                      class="form-control"  
+                      value="<?php echo $val['cantidad'];?>"
+                    />
+                </div>
 
-              <div class="mb-1 col-12">
-                <label for="clienteId" class="form-label">Cliente Id</label>
-                <select class="form-select" aria-label="Default select example" id="cliente_id" name="cliente_id" required>
-                  <option selected>Seleccione el id del Cliente</option>
-                  <?php
-                    foreach($idcliente as $key => $valor){
-                    ?> 
-                  <option value="<?= $valor["cliente_id"]?>"><?= $valor["nombre_clientes"]?></option>
-                  <?php
-                    }
-                  ?>
-                </select>
-              </div>
-
-              <div class="mb-1 col-12">
-                <label for="fecha" class="form-label">fecha</label>
-                <input 
-                  type="date"
-                  id="fecha"
-                  name="fecha"
-                  class="form-control"  
-                  placeholder="Ingrese la fecha"
-                  value="<?php echo $val['fecha'];?>"
-                />
-              </div>
+                <div class="mb-1 col-12">
+                    <label for="precio_venta" class="form-label">Precio Venta</label>
+                    <input 
+                      type="number"
+                      id="precio_venta"
+                      name="precio_venta"
+                      class="form-control"  
+                      placeholder="Ingrese el precio de venta"
+                      value="<?php echo $val['precio_venta'];?>"
+                    />
+                </div>
 
                 <div class=" col-12 m-2">
                     <input type="submit" class="btn btn-primary" value="UPDATE" name="editar"/>

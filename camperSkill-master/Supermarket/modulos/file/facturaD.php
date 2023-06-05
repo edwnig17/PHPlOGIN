@@ -1,9 +1,15 @@
 <?php
-  require_once('../../configs/configCatego.php');
+ini_set("display_errors", 1);
+
+ini_set("display_startup_errors", 1);
+
+error_reporting(E_ALL);
+  require_once('../../configs/configDetalle.php');
 
   $data = new Config();
 
   $all = $data -> obtainAll();
+  $idProducto = $data-> obtenerProducto_id();
 
 ?>
 
@@ -42,43 +48,41 @@
           <i class="bi bi-house-door"> </i>
           <h3 style="margin: 0px;">Categorias</h3>
         </a>
-        <a href="./clientes.php" style="display: flex;gap:1px;">
+        <a href="clientes.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Clientes</h3>
         </a>
-        <a href="./empleados.php" style="display: flex;gap:1px;">
+        <a href="empleados.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Empleados</h3>
         </a>
-        <a href="./facturas.php" style="display: flex;gap:1px;">
+        <a href="facturas.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Facturas</h3>
         </a>
-        <a href="./clientes.php" style="display: flex;gap:1px;">
+        <a href="clientes.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Clientes</h3>
         </a>
-        <a href="./facturaD.php" style="display: flex;gap:1px;">
+        <a href="facturaD.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Factura Detalle</h3>
         </a>
-        <a href="./productos.php" style="display: flex;gap:1px;">
+        <a href="productos.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Productos</h3>
         </a>
-        <a href="./proveedores.php" style="display: flex;gap:1px;">
+        <a href="proveedores.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Proveedores</h3>
         </a>
-        <a href="../../login/login.php" style="display: flex;gap:1px;">
-          <i src="../../css/79554133716276580913769-128.png"></i>
-          <h3 style="margin: 0px;font-weight: 800;">Salir</h3>
-        </a>  
+        
       </div>
     </div>
+
     <div class="parte-media">
       <div style="display: flex; justify-content: space-between;">
-        <h2>Categorias</h2>
+        <h2>Factura Detalle</h2>
         <button class="btn-m" data-bs-toggle="modal" data-bs-target="#registrarEstudiantes"><i class="bi bi-person-add " style="color: rgb(255, 255, 255);" ></i></button>
       </div>
       <div class="menuTabla contenedor2">
@@ -86,9 +90,10 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">NOMBRES</th>
-              <th scope="col">DESCRIPCION</th>
-              <th scope="col">IMAGEN</th>
+              <th scope="col">PRODUCTO</th>
+              <th scope="col">CANTIDAD</th>
+              <th scope="col">PRECIO VENTA</th>
+              <th scope="col">TOTAL</th>
               <th scope="col">DETALLE</th>
             </tr>
           </thead>
@@ -100,13 +105,14 @@
               foreach ($all as $key => $val){
             ?>
             <tr>
-              <td><?= $val['categoria_id'] ?></td>
-              <td><?= $val['categoriaNombre'] ?></td>
-              <td><?= $val['descripcion'] ?></td>
-              <td><img class="imagenProd" src="<?php echo $val['imagen'] ?>" alt="NADA"></td>
+              <td><?= $val['factura_detalle_id'] ?></td>
+              <td><?= $val['nombre_producto'] ?></td>
+              <td><?= $val['cantidad'] ?></td>
+              <td><?= $val['precio_venta'] ?></td>
+              <td><?= $total = $val['precio_venta']*$val['cantidad']; ?></td>
               <td class="row justify-content-center gap-2 col-10">
-                <a class="btn btn-danger" href="../../modulos/actions/categorias/borrarCategoria.php?id=<?= $val['categoria_id'] ?>&req=delete">BORRAR</a>
-                <a class="btn btn-primary" href="../../modulos/actions/categorias/actualizarCategorias.php?id=<?=$val['categoria_id']?>">Editar</a>
+                <a class="btn btn-danger" href="../actions/detalle/borrarDetalle.php?id=<?= $val['factura_detalle_id'] ?>&req=delete">BORRAR</a>
+                <a class="btn btn-primary" href="../actions/detalle/actualizarDetalle.php?id=<?=$val['factura_detalle_id']?>">Editar</a>
               </td>
             </tr>
 
@@ -134,39 +140,40 @@
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
         <div class="modal-content" >
           <div class="modal-header" >
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Estudiante</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Factura Detalle</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="background-color: rgb(231, 253, 246);">
-            <form class="col d-flex flex-wrap" action="../actions/categorias/registrarCategoria.php" method="post">
+            <form class="col d-flex flex-wrap" action="../actions/detalle/registrarDetalle.php" method="post">
+              <select class="form-select" aria-label="Default select example" id="producto_id" name="producto_id" required>
+                <option selected>Seleccione el id del Empleados</option>
+                <?php
+                  foreach($idProducto as $key => $valor){
+                  ?> 
+                <option value="<?= $valor["producto_id"]?>"><?= $valor["nombre_producto"]?></option>
+                <?php
+                  }
+                ?>
+              </select>
+
               <div class="mb-1 col-12">
-                <label for="nombreCategorias" class="form-label">Nombre Categoria: </label>
+                <label for="cantidad" class="form-label">Cantidad: </label>
                 <input 
-                  type="text"
-                  id="nombreCategorias"
-                  name="nombreCategorias"
+                  type="number"
+                  id="cantidad"
+                  name="cantidad"
                   class="form-control"  
                 />
               </div>
 
               <div class="mb-1 col-12">
-                <label for="descripcion" class="form-label">Descripcion: </label>
+                <label for="precio_venta" class="form-label">Precio Venta</label>
                 <input 
-                  type="text"
-                  id="descripcion"
-                  name="descripcion"
+                  type="number"
+                  id="precio_venta"
+                  name="precio_venta"
                   class="form-control"  
-                />
-              </div>
-
-              <div class="mb-1 col-12">
-                <label for="imagen" class="form-label">Imagen</label>
-                <input 
-                  type="url"
-                  id="imagen"
-                  name="imagen"
-                  class="form-control"  
-                 placeholder="Ingrese la url de la imagen"
+                  placeholder="Ingrese el precio de Venta"
                 />
               </div>
 

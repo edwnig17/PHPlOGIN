@@ -1,29 +1,24 @@
 <?php 
-    require_once("../../../configs/configFacturas.php");
+    require_once("../../../configs/configProveedores.php");
     $data = new Config();
     $id = $_GET['id'];
     $data-> setId($id);
     $record = $data->selectOne();
-  
+    print_r($record);
     $val = $record[0];
-   
-
-    $all = $data -> obtainAll();
-    $idempleado = $data->obtenerEmpleadoId();
-    $idcliente = $data->obtenerClienteId();
+    print_r($val);
 
     if(isset($_POST['editar'])){
-        $data->setEmpleado_id($_POST['empleado_id']);
-        $data->setCliente_id($_POST['cliente_id']);
-        $data->setFecha($_POST['fecha']);
+        $data->setNombre_proveedores($_POST['nombre_proveedores']);
+        $data->setTelefono_proveedores($_POST['telefono_proveedores']);
+        $data->setCiudad_proveedores($_POST['ciudad_proveedores']);
 
         $data->update();
-        echo "<script>alert('Datos actualizados satisfactoriamente');document.location='../../file/facturas.php'</script>";
+        echo "<script>alert('Datos actualizados satisfactoriamente');document.location='../../file/proveedores.php'</script>";
     }
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -82,47 +77,41 @@
       </div>
     </div>
     <div class="parte-media">
-        <h2 class="m-2">Factura a Editar</h2>
+        <h2 class="m-2">Proveedor a Editar</h2>
         <div class="menuTabla contenedor2">
             <form class="col d-flex flex-wrap" action=""  method="post">
                 <div class="mb-1 col-12">
-                <select class="form-select" aria-label="Default select example" id="empleado_id" name="empleado_id" required>
-                  <option selected>Seleccione el id del Empleados</option>
-                  <?php
-                    foreach($idempleado as $key => $valor){
-                    ?> 
-                  <option value="<?= $valor["empleado_id"]?>"><?= $valor["nombre_empleados"]?></option>
-                  <?php
-                    }
-                  ?>
-                </select>
-              </div>
+                    <label for="nombres" class="form-label">Nombre: </label>
+                    <input 
+                      type="text"
+                      id="nombres"
+                      name="nombre_proveedores"
+                      class="form-control"  
+                      value="<?php echo $val['nombre_proveedores'];?>"
+                    />
+                </div>
 
-              <div class="mb-1 col-12">
-                <label for="clienteId" class="form-label">Cliente Id</label>
-                <select class="form-select" aria-label="Default select example" id="cliente_id" name="cliente_id" required>
-                  <option selected>Seleccione el id del Cliente</option>
-                  <?php
-                    foreach($idcliente as $key => $valor){
-                    ?> 
-                  <option value="<?= $valor["cliente_id"]?>"><?= $valor["nombre_clientes"]?></option>
-                  <?php
-                    }
-                  ?>
-                </select>
-              </div>
+                <div class="mb-1 col-12">
+                  <label for="telefono_proveedores" class="form-label">Telefono Proveedor: </label>
+                  <input 
+                    type="text"
+                    id="telefono_proveedores"
+                    name="telefono_proveedores"
+                    class="form-control"  
+                    value="<?php echo $val['telefono_proveedores'];?>"
+                  />
+                </div>
 
-              <div class="mb-1 col-12">
-                <label for="fecha" class="form-label">fecha</label>
-                <input 
-                  type="date"
-                  id="fecha"
-                  name="fecha"
-                  class="form-control"  
-                  placeholder="Ingrese la fecha"
-                  value="<?php echo $val['fecha'];?>"
-                />
-              </div>
+                <div class="mb-1 col-12">
+                  <label for="ciudad_proveedores" class="form-label">Ciudad del Proveedor</label>
+                  <input 
+                    type="text"
+                    id="ciudad_proveedores"
+                    name="ciudad_proveedores"
+                    class="form-control"  
+                    value="<?php echo $val['ciudad_proveedores'];?>"
+                  />
+                </div>
 
                 <div class=" col-12 m-2">
                     <input type="submit" class="btn btn-primary" value="UPDATE" name="editar"/>

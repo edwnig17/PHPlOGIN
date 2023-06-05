@@ -1,5 +1,11 @@
 <?php
-  require_once('../../configs/configCatego.php');
+ini_set("display_errors", 1);
+
+ini_set("display_startup_errors", 1);
+
+error_reporting(E_ALL);
+
+  require_once('../../configs/configProveedores.php');
 
   $data = new Config();
 
@@ -42,27 +48,23 @@
           <i class="bi bi-house-door"> </i>
           <h3 style="margin: 0px;">Categorias</h3>
         </a>
-        <a href="./clientes.php" style="display: flex;gap:1px;">
+        <a href="clientes.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Clientes</h3>
         </a>
-        <a href="./empleados.php" style="display: flex;gap:1px;">
+        <a href="empleados.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Empleados</h3>
         </a>
-        <a href="./facturas.php" style="display: flex;gap:1px;">
+        <a href="facturas.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Facturas</h3>
         </a>
-        <a href="./clientes.php" style="display: flex;gap:1px;">
-          <i class="bi bi-people"></i>
-          <h3 style="margin: 0px;font-weight: 800;">Clientes</h3>
-        </a>
-        <a href="./facturaD.php" style="display: flex;gap:1px;">
+        <a href="facturaD.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Factura Detalle</h3>
         </a>
-        <a href="./productos.php" style="display: flex;gap:1px;">
+        <a href="productos.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Productos</h3>
         </a>
@@ -70,15 +72,12 @@
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Proveedores</h3>
         </a>
-        <a href="../../login/login.php" style="display: flex;gap:1px;">
-          <i src="../../css/79554133716276580913769-128.png"></i>
-          <h3 style="margin: 0px;font-weight: 800;">Salir</h3>
-        </a>  
       </div>
     </div>
+
     <div class="parte-media">
       <div style="display: flex; justify-content: space-between;">
-        <h2>Categorias</h2>
+        <h2>Proveedores</h2>
         <button class="btn-m" data-bs-toggle="modal" data-bs-target="#registrarEstudiantes"><i class="bi bi-person-add " style="color: rgb(255, 255, 255);" ></i></button>
       </div>
       <div class="menuTabla contenedor2">
@@ -87,8 +86,8 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">NOMBRES</th>
-              <th scope="col">DESCRIPCION</th>
-              <th scope="col">IMAGEN</th>
+              <th scope="col">TELEFONO</th>
+              <th scope="col">CIUDAD</th>
               <th scope="col">DETALLE</th>
             </tr>
           </thead>
@@ -100,13 +99,13 @@
               foreach ($all as $key => $val){
             ?>
             <tr>
-              <td><?= $val['categoria_id'] ?></td>
-              <td><?= $val['categoriaNombre'] ?></td>
-              <td><?= $val['descripcion'] ?></td>
-              <td><img class="imagenProd" src="<?php echo $val['imagen'] ?>" alt="NADA"></td>
+              <td><?= $val['proveedores_id'] ?></td>
+              <td><?= $val['nombre_proveedores'] ?></td>
+              <td><?= $val['telefono_proveedores'] ?></td>
+              <td><?= $val['ciudad_proveedores'] ?></td>
               <td class="row justify-content-center gap-2 col-10">
-                <a class="btn btn-danger" href="../../modulos/actions/categorias/borrarCategoria.php?id=<?= $val['categoria_id'] ?>&req=delete">BORRAR</a>
-                <a class="btn btn-primary" href="../../modulos/actions/categorias/actualizarCategorias.php?id=<?=$val['categoria_id']?>">Editar</a>
+                <a class="btn btn-danger" href="../../modulos/actions/proveedores/borrarProveedor.php?id=<?= $val['proveedores_id'] ?>&req=delete">BORRAR</a>
+                <a class="btn btn-primary" href="../../modulos/actions/proveedores/actualizarProveedor.php?id=<?=$val['proveedores_id']?>">Editar</a>
               </td>
             </tr>
 
@@ -134,39 +133,39 @@
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
         <div class="modal-content" >
           <div class="modal-header" >
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Estudiante</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Proveedor</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="background-color: rgb(231, 253, 246);">
-            <form class="col d-flex flex-wrap" action="../actions/categorias/registrarCategoria.php" method="post">
+            <form class="col d-flex flex-wrap" action="../actions/proveedores/registrarProveedores.php" method="post">
               <div class="mb-1 col-12">
-                <label for="nombreCategorias" class="form-label">Nombre Categoria: </label>
+                <label for="nombre_proveedores" class="form-label">Nombre Proveedor: </label>
                 <input 
                   type="text"
-                  id="nombreCategorias"
-                  name="nombreCategorias"
+                  id="nombre_proveedores"
+                  name="nombre_proveedores"
                   class="form-control"  
                 />
               </div>
 
               <div class="mb-1 col-12">
-                <label for="descripcion" class="form-label">Descripcion: </label>
+                <label for="telefono_proveedores" class="form-label">Telefono Proveedores: </label>
                 <input 
-                  type="text"
-                  id="descripcion"
-                  name="descripcion"
+                  type="number"
+                  id="telefono_proveedores"
+                  name="telefono_proveedores"
                   class="form-control"  
                 />
               </div>
 
               <div class="mb-1 col-12">
-                <label for="imagen" class="form-label">Imagen</label>
+                <label for="ciudad_proveedores" class="form-label">Ciudad Proveedores</label>
                 <input 
-                  type="url"
-                  id="imagen"
-                  name="imagen"
+                  type="text"
+                  id="ciudad_proveedores"
+                  name="ciudad_proveedores"
                   class="form-control"  
-                 placeholder="Ingrese la url de la imagen"
+                  placeholder="Ingrese la Ciudad del Proveedores"
                 />
               </div>
 
